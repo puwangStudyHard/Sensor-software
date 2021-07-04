@@ -1,0 +1,60 @@
+# Config file in sensor project
+
+# MySQL default config (You need to change them if you'd like to run in your env)
+use-mysql: false
+mysql:
+  ip: '127.0.0.1'
+  port: 3306
+  username: 'root'
+  password: '540279653'
+  database: 'my_data'
+
+# deploy your remote mqtt service
+server:
+  ip: '123.57.66.63'
+  port: 1883
+
+start_date: '2021-05-19'
+
+# Sensor Configuration (Currently we have 8 simulate sensors)
+variable_dic:
+  1:
+    name: 'temp_r1'
+    unit_name: 'Temperature'
+    unit: '℃'
+    time_interval: 20
+  2:
+    name: 'humidity_r1'
+    unit_name: 'Humidity'
+    unit: '%'
+    time_interval: 20
+  3:
+    name: 'temp_r2'
+    unit_name: 'Temperature'
+    unit: '℃'
+    time_interval: 20
+  4:
+    name: 'humidity_r2'
+    unit_name: 'Humidity'
+    unit: '%'
+    time_interval: 20
+  5:
+    name: 'temp_od'
+    unit_name: 'Temperature'
+    unit: '℃'
+    time_interval: 20
+  6:
+    name: 'humidity_od'
+    unit_name: 'Humidity'
+    unit: '%'
+    time_interval: 20
+  7:
+    name: 'daylight_od'
+    unit_name: 'Illumination'
+    unit: 'lux'
+    time_interval: 20
+  8:
+    name: 'energy_consumption'
+    unit_name: 'Energy Consumption'
+    unit: 'W'
+    time_interval: 20

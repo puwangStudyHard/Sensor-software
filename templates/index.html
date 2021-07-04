@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href='../static/css/index.css' rel="stylesheet"/>
+    <link rel='shortcut icon' type='image/x-icon' href='../static/img/favicon.ico'/>
+    <script src="../static/js/jquery-3.5.1.js"></script>
+    <script src="../static/js/echarts.min.js"></script>
+    <script src="../static/js/echarts-template.js"></script>
+    <title>Diploma Project</title>
+</head>
+
+<script>
+    let variable_type = 1
+
+    function generate_line(list, unit) {
+        return '<tr> <td align="center" >' + list[0] + '</td> <td align="center">' + list[1] + unit + '</td></tr>'
+    }
+
+    function get_data(){
+        let var_type = variable_type
+        $.ajax({
+            url: '/get-param?type=' + var_type,
+            timeout: 10000,
+            success: function (data){
+                option.legend.data = data.data.date
+                option.title.text = data.data.title
+                option.series = []
+                for (var i=0; i<data.data.series.length; i++) {
+                    option.series.push({
+                        name: data.data.series[i].name,
+                        type: 'line',
+                        stack: String(i),
+                        data: data.data.series[i].data
+                    })
+                }
+                let tableString = '<table border="1" width="80%"><tr style="width:40%"> <th>time</th><th>' + data.data.unit_name + '</th></tr>'
+                for (var i=0; i<data.data.tableList.length; i++) {
+                    tableString += generate_line(data.data.tableList[i], data.data.unit)
+                }
+                tableString += '</table>'
+                // tempChart.clear()
+                tempChart.setOption(option)
+                // console.log("option: ", option)
+                // console.log("series: ", data.data.series)
+                $('#peak').html("Peak: " + data.data.peak)
+                $('#valley').html("Valley: " + data.data.valley)
+                $('#average').html("Average: " + data.data.average)
+                $('#data-table').html(tableString)
+            }
+        })
+    }
+
+    function change_type(var_type) {
+        variable_type = var_type
+        tempChart.clear()
+        get_data()
+    }
+
+    function set_interval(var_type) {
+        value = document.getElementById('freq').value
+        $.ajax({
+            url: '/set-interval?type=' + var_type + '&interval=' + value,
+            timeout: 10000
+        })
+        document.getElementById('freq').value = ""
+    }
+</script>
+
+<body>
+    <header id="header">
+        <a class="default" id="bupt_logo" href="https://www.manchester.ac.uk/" target="_blank">
+            <img style="width:100%;height:100%" src="../static/img/ed_logo.png">
+        </a>
+    </header>
+    <section id="main">
+        <div id="link_list">
+            <a onclick="change_type(1)" target="_blank"><button class="info_btn">R1 Temp</button></a>&nbsp;
+            <a onclick="change_type(2)" target="_blank"><button class="info_btn">R1 Humidity</button></a>&nbsp;
+            <a onclick="change_type(3)" target="_blank"><button class="info_btn">R2 Temp</button></a>&nbsp;
+            <a onclick="change_type(4)" target="_blank"><button class="info_btn">R2 Humidity</button></a>&nbsp;
+            <a onclick="change_type(5)" target="_blank"><button class="info_btn">OD Temp</button></a>&nbsp;
+            <a onclick="change_type(6)" target="_blank"><button class="info_btn">OD Humidity</button></a>&nbsp;
+            <a onclick="change_type(7)" target="_blank"><button class="info_btn">OD Daylight</button></a>
+            <a onclick="change_type(8)" target="_blank"><button class="info_btn">Energy Consumption</button></a>
+        </div>
+        <div id="key-data">
+            <div id="peak">Peak: </div>
+            <div id="valley">Valley: </div>
+            <div id="average">Average: </div>
+            <div id="update-freq">
+                Update Transmit Frequence: <input id="freq" style="position:relative;width:60px"/>s/trans
+                <button onclick="set_interval(variable_type)">Submit</button>
+            </div>
+        </div>
+        <div id="chart">
+            <script>
+                var tempChart = echarts.init(document.getElementById("chart"))
+                // tempChart.setOption(option)
+                setInterval(get_data, 1000)
+            </script>
+        </div>
+        <div id="data-table"></div>
+    </section>
+</body>
+</html>

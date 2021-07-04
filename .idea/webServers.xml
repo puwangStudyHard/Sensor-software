@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="8b8a9fd6-2078-49b9-971f-1c3150be2414" name="mqtt-client" url="">
+        <fileTransfer rootFolder="/wzh" accessType="SFTP" host="123.57.66.63" port="22" sshConfigId="ddb25432-7769-4fce-a0c4-b715040e58c0" sshConfig="root@123.57.66.63:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

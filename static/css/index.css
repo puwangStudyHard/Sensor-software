@@ -1,0 +1,337 @@
+body{
+	position: absolute;
+	width: 1800px;
+	margin: 0;
+	background: #333;
+}
+
+a.default:hover {
+	background: purple;
+}
+button:hover {
+	background: purple;
+}
+#header {
+	position: absolute;
+	width: 1800px;
+	height: 6.5rem;
+	display: flex;
+	/*background: aqua;*/
+}
+
+.log_btn{
+	position: absolute;
+	width: 6rem;
+	height: 2rem;
+	top: 2rem;
+	left: 6.5rem;
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	padding-top: 0.3em;
+	background: #333;
+	color: white;
+}
+
+.summary{
+	position: absolute;
+	width: 6.5rem;
+	height: 2rem;
+	top: 1rem;
+	left: 12rem;
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	padding-top: 0.3em;
+	background: #333;
+	color: white;
+}
+
+#bupt_logo {
+	position: absolute;
+	width: 15.7rem;
+	height: 5.625rem;
+	top: 1.5rem;
+	left: 42.6%;
+}
+
+#portrait {
+	position: absolute;
+	width: 4.375rem;
+	height: 4.375rem;
+	top: 0.8rem;
+	right: 5%;
+	border-radius: 50%;
+}
+
+#top_menu {
+	position: absolute;
+	width: 4.3rem;
+	height: 4.4rem;
+	top: 0.6rem;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 0;
+}
+
+a.menu_label:hover {
+	background: purple;
+}
+
+.menu_label {
+	font-size: 0.75rem;
+	margin: 0;
+	padding: 0;
+	vertical-align: bottom;
+	font-family: 'Times New Roman', Times, serif;
+	color: white;
+}
+
+#current_time {
+	position: absolute;
+	right: 1%;
+	top: 5.6rem;
+	font-size: 0.875rem;
+	color: white;
+	font-family: 'Times New Roman';
+}
+
+#main {
+	position: absolute;
+	width: 80%;
+	height: 960px;
+	top: 7rem;
+	left: 10%;
+	display: flex;
+	border-radius: 0.75rem;
+	/*border: 0.0625rem solid white;*/
+}
+#key-data {
+	position: absolute;
+	width: 70%;
+	height: 40px;
+	top: 370px;
+	left: 15%;
+	border-radius: 0.75rem;
+	border: 0.0625rem solid white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#peak {
+	position: absolute;
+	width: 10%;
+	left: 5%;
+	color: white;
+}
+
+#valley {
+	position: absolute;
+	width: 10%;
+	left: 20%;
+	color: white;
+}
+
+#average {
+	position: absolute;
+	width: 13%;
+	left: 35%;
+	color: white;
+}
+
+#update-freq {
+	position: absolute;
+	left: 50%;
+	color: white;
+	font-size: 14px;
+}
+
+#chart {
+	position: absolute;
+	width: 70%;
+	height: 250px;
+	top: 6rem;
+	left: 15%;
+	border-radius: 0.75rem;
+	border: 0.0625rem solid white;
+}
+
+#data-table {
+	position: absolute;
+	width: 70%;
+	height: 450px;
+	top: 430px;
+	left: 15%;
+	border-radius: 0.75rem;
+	/*border: 0.0625rem solid white;*/
+}
+
+table {
+	position: absolute;
+	color: white;
+	left: 10%;
+	top: 3rem;
+}
+
+#link_list {
+	position: absolute;
+	width: 70%;
+	height: 2.5rem;
+	top: 2rem;
+	left: 15%;
+	/*background: aqua;*/
+	border-radius: 0.5rem;
+	border: 0.0625rem white solid;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.info_btn{
+	background: #333;
+	width: 7rem;
+	height: 2.1875rem;
+	color: white;
+	border: none;
+	font-size: 1rem;
+	border-radius: 0.25rem;
+}
+
+#my_resume {
+	position: absolute;
+	width: 50.625rem;
+	height: 8.75rem;
+	top: 25rem;
+	left: 1.25rem;
+	/*background: aqua;*/
+	border-radius: 0.5rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 0.9375rem;
+	font-family: "Times New Roman";
+	color: white;
+}
+
+#project_label {
+	position: absolute;
+	width: 7.5rem;
+	height: 1.875rem;
+	top: 34.6875rem;
+	left: 1.25rem;
+	/*background: aqua;*/
+	color: white;
+	font-size: 1.5625rem;
+	font-family: "Times New Roman";
+}
+
+#my_project {
+	position: absolute;
+	width: 50.625rem;
+	height: 21rem;
+	top: 37.5rem;
+	left: 1.25rem;
+	/*background: aqua;*/
+	border-radius: 0.5rem;
+	border: 0.0625rem solid white;
+}
+
+.project_list {
+	color: white;
+	font-size: 1.25rem;
+	font-family: "Times New Roman";
+}
+
+#left-side {
+	position: absolute;
+	width: 259px;
+	height: 960px;
+	top: 7rem;
+	left: 14px;
+	display: flex;
+	border: 0.0625rem solid white;
+	border-radius: 0.75rem;
+}
+
+#right-side {
+	position: absolute;
+	width: 259px;
+	height: 960px;
+	top: 7rem;
+	left: 1166px;
+	display: flex;
+	border: 0.0625rem solid white;
+	border-radius: 0.75rem;
+}
+
+.pure_label{
+	position: absolute;
+	font-family: "Times New Roman";
+	font-size: 1.25rem;
+	color: white;
+	display: flex;
+}
+
+li.navi_bar:hover{
+	color: aqua;
+}
+.navi_bar {
+	font-size: 0.9375rem;
+	color: white;
+	font-family: "Times New Roman";
+}
+
+#sign {
+	position: absolute;
+	display: flex;
+}
+
+#leetcode_content{
+
+}
+
+.msg_board{
+	position: absolute;
+	top: 2rem;
+	left: 5rem;
+	display: flex;
+	color: white;
+	background: #333;
+	font-family: "Times New Roman";
+	font-size: 1rem;
+}
+
+.clear_btn{
+	position: absolute;
+	width: 15rem;
+	height: 2rem;
+	top: 17rem;
+	left: 7rem;
+	background: #333;
+	color: white;
+}
+
+.submit_btn{
+	position: absolute;
+	width: 15rem;
+	height: 2rem;
+	top: 17rem;
+	left: 24rem;
+	background: #333;
+	color: white;
+}
+
+#bottom{
+	position: absolute;
+	width: 864px;
+	height: 30px;
+	top: 1070px;
+	left: 288px;
+	display: flex;
+	color: white;
+	font-size: 12px;
+	align-items: center;
+	justify-content: center;
+}
