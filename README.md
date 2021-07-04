@@ -60,21 +60,21 @@ IoT-based sensor application
 
 ```
 
-## app.py（用户终端）
+## app.py（user terminal）
 
-主要功能：启动Flask服务，同时与远程Broker建立联系，随时准备传输与接收数据
+Main function: Start the Flask service, and establish contact with the remote Broker at the same time, ready to transmit and receive data.
 
 ```python
-# 启用两个线程，一个是Flask服务，一个是MQTT服务
+# Start two threads, one is Flask service, the other is MQTT service
 try:
     _thread.start_new_thread(start_flask, ("Thread-1", 2,))
     _thread.start_new_thread(start_mqtt, ("Thread-2", 4,))
 ```
 
-MQTT关键部分：
+MQTT main part：
 
 ```python
-# 如果接收到了从MQTT传来的数据，写入文本文件（或mysql）
+# If the data from MQTT is received, write it into a text file (or mysql)
 def on_message(client, userdata, msg):
     var_type, value_str = str(msg.payload)[2:-1].split(';')
     time_stamp, value = value_str.split(":")
@@ -91,17 +91,17 @@ def on_message(client, userdata, msg):
     print(msg.topic + " " + str(msg.payload))
 ```
 
-Flask关键部分：
+Flask main part：
 
 ```python
-# 将index.html设置为默认调用的前端显示页面
+# Set index.html as the Front-End display page called by default
 @app.route('/')
 def hello_world():
     return render_template('index.html')
 ```
 
 ```python
-# 从文本文件里拿最新数据往前端传
+# Get the latest data from the text file to the Front-End
 @app.route('/get-param')
 def get_param():
     var_type = request.args.get('type')
@@ -110,7 +110,7 @@ def get_param():
 ```
 
 ```python
-# 从前端拿用户提交的time-interval传给传感器端
+# Take the time-interval submitted by the user from the Front-End and pass it to the sensor client
 @app.route('/set-interval')
 def set_interval():
     interval = request.args.get('interval')
@@ -121,12 +121,12 @@ def set_interval():
     return "OK"
 ```
 
-## sensor-client.py
+## sensor-client.py(sensor client)
 
-主要功能：开启8个线程，分别代表8个不同的传感器
+Main function: open 8 threads, representing 8 different sensors
 
 ```python
-# 定义一个线程类，每个传感器都调用这个类
+# Define a thread class, each sensor calls this class
 class myThread (threading.Thread):
     def __init__(self, thread_id, interval, time_stamp, all_data):
         threading.Thread.__init__(self)
@@ -139,18 +139,18 @@ class myThread (threading.Thread):
 
     def run(self):
         counter = 0
-        # 传感器默认处于关闭状态，直到收到服务端的指令
+        # The sensor is turned off by default until it receives an instruction from the user terminal 
         while not self.is_start:
             time.sleep(1)
         while self.is_start:
-            # 设置传感器的默认传输频率（2s）
+            # Set the default transmission frequency of the sensor (2s)
             self.interval = utils.read_from_config('send_frequency')
             print('self.interval: ', self.interval)
             if counter >= len(self.all_data):
                 break
-            # 休眠2s
+            # sleep 2s
             time.sleep(self.interval)
-            # 向MQTT传输数据
+            # send data to MQTT broker
             payload = str(self.thread_id) + ';' + str(self.time_stamp) + ":" + str(self.all_data[counter])
             client.publish("send-data", payload=payload, qos=2)
             client.loop_start()
@@ -159,7 +159,7 @@ class myThread (threading.Thread):
 ```
 
 ```python
-# 构造了8个线程
+# build 8 threads
 # 1. R1_TEMP
 r1_temp_thread = myThread(1, 1000, time_stamp, utils.generate_random_temperature())
 # 2. R1_HUMIDITY
@@ -181,10 +181,10 @@ energy_thread = myThread(8, 1000, time_stamp, utils.generate_random_energy())
 
 ## utils.py
 
-主要功能：读取数据、处理数据、生成数据
+Main functions: read data, process data, generate data
 
 ```python
-# get_data函数，用于从txt或mysql中拿数据，并以字典形式返回给前端用于显示
+# The get_data function is used to get data from txt or mysql and return it to the Front-End in the form of a dictionary for display
 def get_data(var_type, conn=None):
     date_info = {
         'name': '05-09',
@@ -233,7 +233,7 @@ def get_data(var_type, conn=None):
         with open(data_path, 'r') as f:
             line = f.readline()
             while line:
-                # 读取一行数据
+                # read one line data
                 time_stamp, data_content = line[:-1].split(':')
                 time_stamp, value = int(time_stamp), float(data_content)
 
@@ -276,7 +276,7 @@ def get_data(var_type, conn=None):
 ```
 
 ```python
-# 从配置文件里读数据的函数
+# Function used to read data from configuration file
 def read_from_config(key):
     f = open(config_path, 'r', encoding='utf-8')
     result = f.read()
@@ -285,15 +285,15 @@ def read_from_config(key):
 ```
 
 ```python
-# 生成基于多项式回归的随机的温度数据、湿度数据同理
+# Generate random temperature data based on polynomial regression and humidity data in the same way
 def generate_random_temperature():
     all_temp_data = []
     for i in range(3):
         min_temp = random.randint(2, 10)
         max_temp = random.randint(min_temp + 2, 21)
-        # 调用data_analysis里的回归文件，作一次回归拿到每小时的数据
+        # Call the regression function in data_analysis, do a regression to get hourly data
         hour_data = reg.generate_mock_temp(min_temp, max_temp)
-        # 把小时数据随机成分钟数据
+        # Randomize hourly data into minute data
         for data in hour_data:
             for _ in range(60):
                 bias = (random.randint(0, 7) / 10 - 0.3)
@@ -302,7 +302,7 @@ def generate_random_temperature():
 ```
 
 ```python
-# 后缀为mysql都是与数据库交互的函数
+# Functions that interact with the database
 def connect2mysql():
     mysql_config = read_from_config('mysql')
     conn = pymysql.connect(host=mysql_config['ip'], port=mysql_config['port'], user=mysql_config['username'],
@@ -312,10 +312,10 @@ def connect2mysql():
 
 ## index.html
 
-主要功能：前端页面
+main function: Front-End page
 
 ```js
-// 从服务器端拿到全量数据并实时显示在页面上
+// Get the full amount of data from the user terminal and display it on the page in real time
 function get_data(){
     let var_type = variable_type
     $.ajax({
@@ -353,7 +353,7 @@ function get_data(){
 ```
 
 ```js
-// 用户设置了time-interval后传会服务器端
+// The user sets the time-interval and sends it to the Back-End
 function set_interval(var_type) {
     value = document.getElementById('freq').value
     $.ajax({
@@ -365,7 +365,7 @@ function set_interval(var_type) {
 ```
 
 ```html
-// body部分是整个前端的组件
+// body part is the components of whole Front-end page
 <body>
     <header id="header">
         <a class="default" id="bupt_logo" href="https://www.manchester.ac.uk/" target="_blank">
@@ -406,16 +406,16 @@ function set_interval(var_type) {
 
 ## crawler.py
 
-简单的爬虫文件，爬取制定url的内容，作一些解析提取出温度和湿度数据，为后面的回归任务做准备
+A simple crawler file, crawl the content of the specified URL, do some analysis to extract the temperature and humidity data, and prepare for the subsequent regression task
 
 ## regression.py
 
-回归函数放在这里
+The regression function is here
 
 ```python
-# 给定一个最小值和最大值（确保每次使用的数据都不完全相同，否则每次回归得到的是相同的曲线）
+# Given a minimum and maximum value (make sure that the data used each time is not exactly the same, otherwise the same curve will be obtained for each regression)
 def generate_mock_temp(min_temp, max_temp):
-	# 先读取数据
+	# read data first
     data_path = './data_analysis/temperature.txt'
     x_raw = []
     with open(data_path, 'r') as f:
@@ -435,15 +435,15 @@ def generate_mock_temp(min_temp, max_temp):
     x_train, y_train = np.array(x), np.array(y)
     x_train = x_train.reshape(-1, 1)
 	
-	# 在这里进行回归任务
+	# Do regression mission here
     poly_reg = Pipeline([
         ("poly", PolynomialFeatures(degree=5)),
         ("std_scaler", StandardScaler()),
         ("lin_reg", LinearRegression())
     ])
-    # 拟合
+    # tting data
     poly_reg.fit(x_train, y_train)
-    # 然后生成24小时的数据
+    # Then generate 24 hours of data
     predict = poly_reg.predict(np.array([i for i in range(24)]).reshape(-1, 1))
     hour_data = list(predict)
     return hour_data
