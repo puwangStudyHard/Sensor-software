@@ -10,22 +10,22 @@ IoT-based sensor application
 ├── __pycache__  
 │   ├── app.cpython-38.pyc
 │   └── utils.cpython-38.pyc
-├── app.py  # 服务器后端
-├── config.yaml  # 配置文件，一些关键常量在此定义
-├── data_analysis  # 数据分析模块
-│   ├── __pycache__  # 默认
+├── app.py  
+├── config.yaml  # Configuration file, some key constants are defined here
+├── data_analysis  # data analysis module
+│   ├── __pycache__  # default
 │   │   └── regression.cpython-38.pyc
-│   ├── crawler.py  # 爬虫系统
-│   ├── daylight.txt  # 光照文本
-│   ├── energy.txt  # 能量文本
-│   ├── humidity.txt  # 湿度文本（爬虫获取）
-│   ├── regression.py  # 回归任务（多项式回归）
-│   └── temperature.txt  # 温度文本（爬虫获取）
-├── sensor-client.py  # 传感器端 （
-├── static  # 前端的静态文件
+│   ├── crawler.py  
+│   ├── daylight.txt  # daylight text file
+│   ├── energy.txt  # energy text file
+│   ├── humidity.txt  # crawl to get humidity data
+│   ├── regression.py  # regression task
+│   └── temperature.txt  #crawl to get temperature data
+├── sensor-client.py  
+├── static  # Front-End static files
 │   ├── css
-│   │   └── index.css  # css样式文件
-│   ├── data  # 这是自动生成的8个传感器的数据，每次运行服务端会被刷新
+│   │   └── index.css  # css style file
+│   ├── data  # This is the automatically generated data of 8 sensors, which will be refreshed every time the user terminal is run
 │   │   ├── 1.txt
 │   │   ├── 2.txt
 │   │   ├── 3.txt
@@ -38,7 +38,7 @@ IoT-based sensor application
 │   │   ├── myplot-3.jpg
 │   │   ├── myplot-4.jpg
 │   │   └── myplot-5.jpg
-│   ├── img  # 这是前端页面中涉及到的一些图片
+│   ├── img  # Here are some pictures involved in the Front-End page
 │   │   ├── ac.png
 │   │   ├── bupt_logo.png
 │   │   ├── bytedance.png
@@ -50,13 +50,13 @@ IoT-based sensor application
 │   │   ├── small_left.png
 │   │   ├── small_right.png
 │   │   └── touxiang.jpg
-│   └── js  # js库文件
+│   └── js  # js library file
 │       ├── echarts-template.js
 │       ├── echarts.min.js
 │       └── jquery-3.5.1.js
-├── templates  # 前端页面
-│   └── index.html  # 前端页面
-└── utils.py  # 工具类，放置服务端和传感器需要的一些函数
+├── templates  # Front-End page
+│   └── index.html 
+└── utils.py  # Tools, place some functions required by the user terminal and sensors
 
 ```
 
