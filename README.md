@@ -2,7 +2,7 @@
 IoT-based sensor application
 # Readme
 
-## 代码骨架
+## Code Structure
 
 ```bash
 .
