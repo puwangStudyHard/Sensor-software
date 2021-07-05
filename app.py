@@ -42,7 +42,7 @@ client.connect(host_dic['ip'], host_dic['port'], 600)  # keepalive time interval
 
 
 def start_flask(thread_name, delay):
-    app.run(host='127.0.0.1', port=5555)
+    app.run(host='0.0.0.0', port=5555)
     if conn:
         conn.close()
 
@@ -91,7 +91,7 @@ if __name__ == '__main__':
         print("Error: Cannot start thread...")
     # Update the transmission frequency of all sensors (2 seconds)
     for i in range(1, 9):
-        client.publish("set-interval", str(i) + ";2", qos=2)
+        client.publish("set-interval", str(i) + ";20", qos=2)
     while 1:
         time.sleep(1)
 

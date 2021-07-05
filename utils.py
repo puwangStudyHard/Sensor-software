@@ -88,6 +88,9 @@ def get_data(var_type, conn=None):
                 if not line:
                     series.append(date_info)
 
+    table_data = table_data[::-1]
+    if len(table_data) > 50:
+        table_data = table_data[:50]
     return {
         'title': variable_dic['name'],
         'unit_name': variable_dic['unit_name'],
@@ -97,7 +100,7 @@ def get_data(var_type, conn=None):
         'average': average,
         'series': series[1:],
         'date': date,
-        'tableList': table_data[::-1]
+        'tableList': table_data
     }
 
 
@@ -111,7 +114,7 @@ def set_start_time(time_string="2021-05-09"):
 
 def get_time(time_stamp):
     time_array = time.localtime(time_stamp)
-    return time.strftime("%Y-%m-%d %H:%M", time_array)
+    return time.strftime("%Y-%m-%d %H:%M:%S", time_array)
 
 
 def get_date(time_stamp):
@@ -138,7 +141,7 @@ def generate_random_temperature():
         max_temp = random.randint(min_temp + 2, 21)
         hour_data = reg.generate_mock_temp(min_temp, max_temp)
         for data in hour_data:
-            for _ in range(60):
+            for _ in range(3600):
                 bias = (random.randint(0, 7) / 10 - 0.3)
                 all_temp_data.append(round(data + bias, 1))
     return all_temp_data
@@ -150,7 +153,7 @@ def generate_random_humidity():
         max_temp = random.randint(75, 100)
         hour_data = reg.generate_mock_humidity(max_temp)
         for data in hour_data:
-            for _ in range(60):
+            for _ in range(3600):
                 bias = (random.randint(0, 20) / 10 - 1)
                 all_humidity_data.append(round(data + bias, 1))
     return all_humidity_data
@@ -168,7 +171,7 @@ def generate_random_daylight():
             hour_data += day_data
             line = f.readline()
     for data in hour_data:
-        for _ in range(60):
+        for _ in range(3600):
             bias = (random.randint(0, 100) - 50)
             all_daylight_data.append(data + bias)
     return all_daylight_data
@@ -186,7 +189,7 @@ def generate_random_energy():
             hour_data += day_data
             line = f.readline()
     for data in hour_data:
-        for _ in range(60):
+        for _ in range(3600):
             bias = random.randint(90, 110)
             all_daylight_data.append(int(data * bias / 100))
     return all_daylight_data

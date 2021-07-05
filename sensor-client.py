@@ -18,21 +18,23 @@ class myThread (threading.Thread):
         self.time_stamp = time_stamp
         self.is_start = False
         self.all_data = all_data
-        self.time_frequency = utils.read_from_config('variable_dic')[thread_id]['time_interval']
+        self.time_frequency = utils.read_from_config('send_frequency')
 
     def run(self):
         counter = 0
         while not self.is_start:
             time.sleep(1)
         while self.is_start:
-            if counter * self.time_frequency >= len(self.all_data):
+            self.interval = utils.read_from_config('send_frequency')
+            # print('self.interval: ', self.interval)
+            if counter >= len(self.all_data):
                 break
             time.sleep(self.interval)
-            payload = str(self.thread_id) + ';' + str(self.time_stamp) + ":" + str(self.all_data[counter * self.time_frequency])
+            payload = str(self.thread_id) + ';' + str(self.time_stamp) + ":" + str(self.all_data[counter])
             client.publish("send-data", payload=payload, qos=2)
             client.loop_start()
-            self.time_stamp += self.time_frequency * 60
-            counter += 1
+            self.time_stamp += self.time_frequency
+            counter += self.time_frequency
 
 
 def on_connect(client, userdata, flags, rc):
@@ -46,8 +48,8 @@ def on_message(client, userdata, msg):
             thread.is_start = True
 
     var_type, value = str(msg.payload)[2:-1].split(';')
-    var_type, value = int(var_type), float(value)
-    thread_lake[var_type-1].interval = value
+    var_type, value = int(var_type), int(value)
+    thread_lake[var_type-1].time_frequency = value
     logging.info(msg.topic + " " + str(msg.payload) + " " + utils.read_from_config("variable_dic")[var_type]['name'])
 
 
@@ -80,7 +82,7 @@ def generate_random_temperature():
     min_temp = random.randint(0, 15)
     max_temp = random.randint(min_temp, 21)
     hour_data = reg.generate_mock_temp(min_temp, max_temp)
-    print(hour_data)
+    # print(hour_data)
     return hour_data
 
 

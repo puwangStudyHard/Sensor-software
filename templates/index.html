@@ -23,6 +23,7 @@
             url: '/get-param?type=' + var_type,
             timeout: 10000,
             success: function (data){
+                option.yAxis.axisLabel.formatter = "{value}" + data.data.unit + ""
                 option.legend.data = data.data.date
                 option.title.text = data.data.title
                 option.series = []
@@ -89,7 +90,7 @@
             <div id="valley">Valley: </div>
             <div id="average">Average: </div>
             <div id="update-freq">
-                Update Transmit Frequence: <input id="freq" style="position:relative;width:60px"/>s/trans
+                Update Time Interval: <input id="freq" style="position:relative;width:60px"/>sec/trans
                 <button onclick="set_interval(variable_type)">Submit</button>
             </div>
         </div>
